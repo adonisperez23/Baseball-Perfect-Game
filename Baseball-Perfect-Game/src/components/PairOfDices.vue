@@ -12,7 +12,7 @@ import {ref} from 'vue'
 import {useDiceStore} from 'stores/DiceStore'
 export default {
   name: 'PairOfDices',
-  emits:['combination'],
+  emits:['combination','disableBtn'],
   props:{
     isPcPlaying:{
       type:Boolean,
@@ -25,9 +25,11 @@ export default {
      dice,clickDice
     }
     function clickDice () {
+      ctx.emit('disableBtn')
       dice.rollDice()
       setTimeout(()=>{
-       ctx.emit('combination')
+        ctx.emit('disableBtn')
+        ctx.emit('combination')
      },3000)
     }
   }

@@ -1,18 +1,40 @@
 <template>
   <div class="row">
-    <div class="col-12 text-center items-start espacio-abajo">
-      <q-btn round :color="second" text-color="black" label="2" />
+    <div class="col-12 text-center items-start">
+      <q-btn round text-color="black">
+        <q-avatar v-if="segunda" size="70px">
+          <img src="canica-1.png">
+        </q-avatar>
+        <q-avatar v-else size="70px">
+          <img src="canica-2.png">
+        </q-avatar>
+      </q-btn>
     </div>
     <div class="col-4 text-center items-start">
-      <q-btn round :color="third" text-color="black" label="3" />
+      <q-btn round  text-color="black">
+        <q-avatar v-if="tercera" size="70px">
+          <img src="canica-1.png">
+        </q-avatar>
+        <q-avatar v-else size="70px">
+          <img src="canica-2.png">
+        </q-avatar>
+      </q-btn>
     </div>
     <PairOfDices
       :isPcPlaying="isPc"
+      @disable-btn="$emit('disableBtn')"
       @combination="$emit('combination')"/>
     <div class="col-4 text-center items-start">
-      <q-btn round :color="first" text-color="black" label="1" />
+      <q-btn round text-color="black">
+        <q-avatar v-if="primera" size="70px">
+          <img src="canica-1.png">
+        </q-avatar>
+        <q-avatar v-else size="70px">
+          <img src="canica-2.png">
+        </q-avatar>
+      </q-btn>
     </div>
-    <div class="col-12 text-center items-end espacio-arriba">
+    <div class="col-12 text-center items-end">
       <q-btn color="white" text-color="black" push label="h" />
     </div>
   </div>
@@ -23,7 +45,7 @@ import {computed} from 'vue'
 import PairOfDices from 'components/PairOfDices.vue'
 export default {
   name: 'SquareBase',
-  emits:['combination'],
+  emits:['combination','disableBtn'],
   components:{
     PairOfDices
   },

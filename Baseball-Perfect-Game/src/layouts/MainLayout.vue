@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header class="bg-orange" elevated>
       <q-toolbar>
         <div v-show="mostrarBoton">
           <q-btn
@@ -75,7 +75,7 @@ export default defineComponent({
 
     function activarBoton() {
       mostrarBoton.value = !mostrarBoton.value
-      if (diceStore.inning == 2){
+      if (diceStore.inning >= 2){
         showWinner.value = true
         setTimeout(()=>{
           showWinner.value = false

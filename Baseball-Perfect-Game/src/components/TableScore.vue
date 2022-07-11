@@ -1,6 +1,7 @@
 <template>
-  <div class="q-pa-md">
+  <div class="q-pa-md no-color">
     <q-table
+      :table-style="{ backgroundImage: 'url(tabla.png)', backgroundSize: '1000px 1000px'}"
       :rows="rows"
       :columns="columns"
       row-key="name"
@@ -27,3 +28,9 @@ export default {
 
 }
 </script>
+<style >
+.no-color{
+  background-image: url('tabla.png');
+  background-size: 1000px 1000px;
+}
+</style>

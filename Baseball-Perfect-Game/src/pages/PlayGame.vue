@@ -1,4 +1,5 @@
 <template>
+  <div class="tabla">
   <GameFases
     :fase="numFase"
     :listaDeCombinaciones="playList" />
@@ -13,6 +14,7 @@
     :primera="baseOne"
     :segunda="baseTwo"
     :tercera="baseThree"
+    @disable-btn="disableBtn"
     @combination="showGamePlay"/>
   <PlayerStatus :playerOne="equipoOne" :playerTwo="equipoTwo"/>
 
@@ -84,9 +86,9 @@
         </q-card-actions> -->
       </q-card>
     </q-dialog>
-
-  <q-page padding>
-  </q-page>
+  </div>
+  <!-- <q-page padding>
+  </q-page> -->
 </template>
 
 <script>
@@ -428,8 +430,12 @@ export default {
         inning,
         player,
         isPc,
+        disableBtn
       }
 
+    function disableBtn() {
+      isPc.value=!isPc.value
+    }
     function enableDice(){
       if(props.equipoTwo=='computadora'){
         isPc.value=!isPc.value
@@ -447,7 +453,7 @@ export default {
             setTimeout(()=>{
               console.log('ejecutando modal de juego')
               showGamePlay()
-            },7000)
+            },8000)
           }
         }
       }
@@ -786,7 +792,7 @@ export default {
           break;
         case '1-6': single(player.value)
           break;
-        case '2-2': if (menInBase.value <= 1 && outs.value <= 1) {
+        case '2-2': if (menInBase.value >= 1 && outs.value <= 1) {
                       doublePlay()
                     } else {
                       groundOut()
@@ -1032,3 +1038,12 @@ export default {
     }
   }
 </script>
+<style scoped>
+  .tabla{
+    background-image: url('tabla.png');
+    background-repeat: no-repeat;
+    background-size: 1400px 670px;
+    background-attachment: scroll;
+
+  }
+</style>

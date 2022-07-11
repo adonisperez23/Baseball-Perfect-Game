@@ -75,7 +75,7 @@
         <q-card-section v-show="chanceToPlayDice > 0" class="q-pt-none">
           <h3 v-show="chanceToPlayDice === 2">Gire los dados equipo: {{teamNameOne}} </h3>
           <h3 v-show="chanceToPlayDice === 1">Ahora Gire los dados equipo: {{teamNameTwo}} </h3>
-          <PairOfDices @combination="showOperation"/>
+          <PairOfDices :isPcPlaying="isPc" @disable-btn="disableBtn" @combination="showOperation"/>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
@@ -92,7 +92,7 @@
         </q-card-section>
 
         <q-card-actions align="center" class="q-pt-none">
-          <q-btn flat :disable="goPlay" @click="toPlay(teamNameOne,teamNameTwo)" label="Jugar!!" v-close-popup />
+          <q-btn flat :disable="goPlay" @click="toPlay(showWinnerTeam,loserTeam)" label="Jugar!!" v-close-popup />
           <q-btn flat  label="Regresar" v-close-popup />
         </q-card-actions>
       </q-card>
@@ -137,9 +137,11 @@ export default {
     const goPlay = ref(true)
     const chanceToPlayDice = ref(2)
     const showWinnerTeam = ref('')
+    const loserTeam = ref('')
     const tie = ref('')
     const showSumTeamOne = ref(false)
     const showSumTeamTwo = ref(false)
+    const isPc = ref(false)
 
 
     return {
@@ -160,7 +162,13 @@ export default {
       showOperation,
       goPlay,
       showWinnerTeam,
-      toPlay
+      loserTeam,
+      toPlay,
+      isPc,
+      disableBtn
+    }
+    function disableBtn(){
+      isPc.value = !isPc.value
     }
     function toPlay(equipo1,equipo2) {
       ctx.emit('activar')
@@ -180,9 +188,11 @@ export default {
         chanceToPlayDice.value = chanceToPlayDice.value-1
         if(sumTeamOne.value > sumTeamTwo.value) {
           showWinnerTeam.value = teamNameOne.value
+          loserTeam.value = teamNameTwo.value
           goPlay.value = false
         } else if(sumTeamOne.value < sumTeamTwo.value){
           showWinnerTeam.value = teamNameTwo.value
+          loserTeam.value = teamNameOne.value
           goPlay.value = false
         } else {
           tie.value = 'Es un Empate, sortear de nuevo'
@@ -195,3 +205,14 @@ export default {
   }
 }
 </script>
+<style>
+    h1{
+      font-family: 'Yellowtail'
+    }
+    @font-face {
+    font-family: 'Yellowtail';
+    src: url('Yellowtail-Regular.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+    }
+</style>
