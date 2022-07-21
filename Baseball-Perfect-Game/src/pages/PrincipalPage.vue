@@ -75,7 +75,7 @@
         <q-card-section v-show="chanceToPlayDice > 0" class="q-pt-none">
           <h3 v-show="chanceToPlayDice === 2">Gire los dados equipo: {{teamNameOne}} </h3>
           <h3 v-show="chanceToPlayDice === 1">Ahora Gire los dados equipo: {{teamNameTwo}} </h3>
-          <PairOfDices :isPcPlaying="isPc" @disable-btn="disableBtn" @combination="showOperation"/>
+          <PairOfDices :disableButton="isPc" @disable-btn="disableBtn" @combination="showOperation"/>
         </q-card-section>
 
         <q-card-section class="q-pt-none">

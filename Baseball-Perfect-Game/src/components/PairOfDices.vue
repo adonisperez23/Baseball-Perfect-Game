@@ -2,7 +2,7 @@
     <div class="col text-h3 text-center">
       {{dice.firstDice}}-{{dice.secondDice}}
       <div class="col">
-        <q-btn :disable="isPcPlaying" @click="clickDice" push color="white" text-color="primary" label="Roll!" />
+        <q-btn :disable="disableButton" @click="clickDice" push color="white" text-color="primary" label="Roll!" />
       </div>
     </div>
 </template>
@@ -14,7 +14,7 @@ export default {
   name: 'PairOfDices',
   emits:['combination','disableBtn'],
   props:{
-    isPcPlaying:{
+    disableButton:{
       type:Boolean,
       default:false
     }

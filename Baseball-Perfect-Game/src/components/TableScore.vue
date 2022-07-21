@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md no-color">
     <q-table
-      :table-style="{ backgroundImage: 'url(tabla.png)', backgroundSize: '1000px 1000px'}"
+      :table-style="{ backgroundImage: 'url(score.jpg)', backgroundSize: '1350px 150px'}"
       :rows="rows"
       :columns="columns"
       row-key="name"
@@ -22,7 +22,6 @@ export default {
     columns:undefined,
     rows:undefined,
     outs:Number,
-    inning:Number,
     showOuts:Boolean,
   }
 
@@ -30,7 +29,7 @@ export default {
 </script>
 <style >
 .no-color{
-  background-image: url('tabla.png');
-  background-size: 1000px 1000px;
+  background-image: url('fondoscore.jpg');
+  background-size: 1350px 200px;
 }
 </style>

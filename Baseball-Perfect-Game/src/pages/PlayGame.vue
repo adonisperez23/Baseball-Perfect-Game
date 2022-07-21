@@ -10,13 +10,18 @@
     :inning="countInning"
     :outs="countOuts"/>
   <SquareBase
-    :isPc="isPc"
+    :isOpponent="isOpponent"
+    :disableButton="disableButton"
     :primera="baseOne"
     :segunda="baseTwo"
     :tercera="baseThree"
     @disable-btn="disableBtn"
     @combination="showGamePlay"/>
-  <PlayerStatus :playerOne="equipoOne" :playerTwo="equipoTwo"/>
+  <PlayerStatus
+    :home="canicaHome"
+    :visitor="canicaVisitor"
+    :playerOne="equipoOne"
+    :playerTwo="equipoTwo"/>
 
   <q-dialog v-model="winnerModal" persistent>
       <q-card style="width: 700px; max-width: 80vw;">
@@ -47,14 +52,6 @@
         <q-card-section class="row items-center">
           <h3>{{jugada}}</h3>
         </q-card-section>
-
-        <!-- <q-card-section v-show="isPc" class="row items-center">
-          <h3>{{jugada}}</h3>
-        </q-card-section> -->
-
-        <!-- <q-card-actions align="right">
-          <q-btn flat @click="recieveCombination(combinacion)" label="aplicar jugada" color="primary" v-close-popup />
-        </q-card-actions> -->
       </q-card>
     </q-dialog>
 
@@ -65,9 +62,6 @@
           <h3 v-else> turno al bate el equipo : {{equipoTwo}}</h3>
         </q-card-section>
 
-        <!-- <q-card-actions align="right">
-          <q-btn flat label="Batear!" color="primary" v-close-popup />
-        </q-card-actions> -->
       </q-card>
     </q-dialog>
 
@@ -81,9 +75,6 @@
             :inning="countInning"
             :outs="countOuts"/>
         </q-card-section>
-        <!-- <q-card-actions align="right">
-          <q-btn flat label="Continuar juego!!" color="primary" v-close-popup />
-        </q-card-actions> -->
       </q-card>
     </q-dialog>
   </div>
@@ -324,7 +315,51 @@ export default {
       const jugada = ref('')
       const playerToBat = ref(false)
       const inningChange = ref(false)
-      const isPc = ref(false)
+      const isOpponent = ref(false)
+      const disableButton = ref(false)
+
+
+
+      const canicaHome = computed(()=>{
+        if(player.value){
+          switch (statusSquare.value) {
+            case 'a': return 4
+            break;
+            case 'b':
+            case 'c':
+            case 'd': return 3
+            break;
+            case 'e':
+            case 'f':
+            case 'g': return 2
+            break;
+            case 'h': return 1
+            break;
+          }
+        } else {
+          return 4
+        }
+      })
+      const canicaVisitor = computed(()=>{
+        if(!player.value){
+          switch (statusSquare.value) {
+            case 'a': return 4
+            break;
+            case 'b':
+            case 'c':
+            case 'd': return 3
+            break;
+            case 'e':
+            case 'f':
+            case 'g': return 2
+            break;
+            case 'h': return 1
+            break;
+          }
+        } else {
+          return 4
+        }
+      })
 
       const baseOne = computed(()=>{
         if(statusSquare.value == 'a' || statusSquare.value =='c' || statusSquare.value == 'd' || statusSquare.value == 'g'){
@@ -350,7 +385,7 @@ export default {
       const countOuts = computed(()=>{
         if (outs.value == 3) {
           playerToBat.value = true
-          enableDice()
+          isOpponent.value = !isOpponent.value
           setTimeout(()=>{
             playerToBat.value = false
             console.log('ejecutando time out del tercer out')
@@ -429,22 +464,21 @@ export default {
         inningChange,
         inning,
         player,
-        isPc,
-        disableBtn
+        isOpponent,
+        disableBtn,
+        disableButton,
+        canicaHome,
+        canicaVisitor
       }
 
     function disableBtn() {
-      isPc.value=!isPc.value
-    }
-    function enableDice(){
-      if(props.equipoTwo=='computadora'){
-        isPc.value=!isPc.value
-      }
+      disableButton.value=!disableButton.value
     }
     function isPcPlaying(){
       if(props.equipoTwo=='computadora'){
         if(!winnerMessage.value){
           if(!player.value && outsToUpInning.value < 6){
+            disableButton.value = true
             console.log('esta jugando la pc')
             setTimeout(()=>{
               console.log('ejecutando dado')
@@ -454,6 +488,8 @@ export default {
               console.log('ejecutando modal de juego')
               showGamePlay()
             },8000)
+          } else {
+            disableButton.value = false
           }
         }
       }
@@ -461,7 +497,6 @@ export default {
     function showGamePlay() {
       let combinacion = String(diceStore.firstDice+'-'+diceStore.secondDice)
       choosePlayMesagge(combinacion)
-      // combinacion.value = combination
       gamePlay.value = true
       setTimeout(()=>{
         gamePlay.value = false
@@ -605,16 +640,13 @@ export default {
             break;
           case 'b':
           case 'c':
-          case 'd':
-            menInBase.value = 1
+          case 'd': menInBase.value = 1
             break;
           case 'e':
           case 'f':
-          case 'g':
-            menInBase.value= 2
+          case 'g': menInBase.value= 2
             break;
-          case 'h':
-            menInBase.value = 3
+          case 'h': menInBase.value = 3
             break;
         }
         isPcPlaying()
@@ -975,6 +1007,7 @@ export default {
           break;
         }
         isPcPlaying()
+        countMenInBase()
         console.log('walk!! Go to firts base')
     }
     function sacrificeFly(player){
@@ -1003,6 +1036,7 @@ export default {
           scoreOne(player)
           break;
       }
+      countMenInBase()
       console.log('it is a sacrificeFly', outs.value)
     }
     function strikeOut(){
@@ -1044,6 +1078,5 @@ export default {
     background-repeat: no-repeat;
     background-size: 1400px 670px;
     background-attachment: scroll;
-
   }
 </style>
