@@ -3,10 +3,25 @@
     <div class="col-6 text-center">
         <h3>{{playerOne}}</h3>
         <div class="row">
-          <div v-for="canica in home" class="col items-center">
+          <div class="col items-center">
             <q-btn round text-color="black">
               <q-avatar size="35px">
                 <img src="canica-1 jpe.jpg">
+              </q-avatar>
+            </q-btn>
+            <q-btn round text-color="black">
+              <q-avatar size="35px">
+                <img :src="cani_a">
+              </q-avatar>
+            </q-btn>
+            <q-btn round text-color="black">
+              <q-avatar size="35px">
+                <img :src="cani_b">
+              </q-avatar>
+            </q-btn>
+            <q-btn round text-color="black">
+              <q-avatar size="35px">
+                <img :src="cani_c">
               </q-avatar>
             </q-btn>
           </div>
@@ -15,10 +30,25 @@
     <div class="col-6 text-center">
       <h3>{{playerTwo}}</h3>
       <div class="row">
-        <div v-for="canica in visitor" class="col items-center">
+        <div class="col">
           <q-btn round text-color="black">
             <q-avatar size="35px">
               <img src="canica-3.jpg">
+            </q-avatar>
+          </q-btn>
+          <q-btn round text-color="black">
+            <q-avatar size="35px">
+              <img :src="cani_d">
+            </q-avatar>
+          </q-btn>
+          <q-btn round text-color="black">
+            <q-avatar size="35px">
+              <img :src="cani_e">
+            </q-avatar>
+          </q-btn>
+          <q-btn round text-color="black">
+            <q-avatar size="35px">
+              <img :src="cani_f">
             </q-avatar>
           </q-btn>
         </div>
@@ -39,14 +69,24 @@ export default {
       type:String,
       default:'Player Two'
     },
-    home:{
-      type:Number,
-      default: 4,
+    cani_a:{
+      type:String
     },
-    visitor:{
-      type:Number,
-      default: 4
-    }
+    cani_b:{
+      type:String
+    },
+    cani_c:{
+      type:String
+    },
+    cani_d:{
+      type:String
+    },
+    cani_e:{
+      type:String
+    },
+    cani_f:{
+      type:String
+    },
   }
 }
 </script>

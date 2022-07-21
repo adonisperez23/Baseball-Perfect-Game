@@ -18,8 +18,12 @@
     @disable-btn="disableBtn"
     @combination="showGamePlay"/>
   <PlayerStatus
-    :home="canicaHome"
-    :visitor="canicaVisitor"
+    :cani_a="cani_a"
+    :cani_b="cani_b"
+    :cani_c="cani_c"
+    :cani_d="cani_d"
+    :cani_e="cani_e"
+    :cani_f="cani_f"
     :playerOne="equipoOne"
     :playerTwo="equipoTwo"/>
 
@@ -254,6 +258,11 @@ const jugadas_fase_4 = [
   { jugada:'FLY OUT', par: '5-6'},
   { jugada:'GRAND SLAM', par: '6-6'},
 ]
+
+const canicaHome = 'canica-1 jpe.jpg'
+const canicaVisitor = 'canica-3.jpg'
+const notCani = 'canica-4.jpg'
+
 export default {
     name: 'PlayGame',
     emits:['activar'],
@@ -320,44 +329,113 @@ export default {
 
 
 
-      const canicaHome = computed(()=>{
+      const cani_a = computed(()=>{
         if(player.value){
           switch (statusSquare.value) {
-            case 'a': return 4
-            break;
+            case 'a':
             case 'b':
             case 'c':
-            case 'd': return 3
-            break;
+            case 'd':
             case 'e':
             case 'f':
-            case 'g': return 2
+            case 'g': return canicaHome
             break;
-            case 'h': return 1
+            case 'h': return notCani
             break;
           }
         } else {
-          return 4
+          return canicaHome
         }
       })
-      const canicaVisitor = computed(()=>{
-        if(!player.value){
+      const cani_b = computed(()=>{
+        if(player.value){
           switch (statusSquare.value) {
-            case 'a': return 4
-            break;
+            case 'a':
             case 'b':
             case 'c':
-            case 'd': return 3
+            case 'd': return canicaHome
             break;
             case 'e':
             case 'f':
-            case 'g': return 2
-            break;
-            case 'h': return 1
+            case 'g':
+            case 'h': return notCani
             break;
           }
         } else {
-          return 4
+          return canicaHome
+        }
+
+      })
+      const cani_c = computed(()=>{
+        if(player.value){
+          switch (statusSquare.value) {
+            case 'a': return canicaHome
+            break;
+            case 'b':
+            case 'c':
+            case 'd':
+            case 'e':
+            case 'f':
+            case 'g':
+            case 'h': return notCani
+            break;
+          }
+        } else {
+          return canicaHome
+        }
+      })
+      const cani_d = computed(()=>{
+        if(!player.value){
+          switch (statusSquare.value) {
+            case 'a':
+            case 'b':
+            case 'c':
+            case 'd':
+            case 'e':
+            case 'f':
+            case 'g': return canicaVisitor
+            break;
+            case 'h': return notCani
+            break;
+          }
+        } else {
+          return canicaVisitor
+        }
+      })
+      const cani_e = computed(()=>{
+        if(!player.value){
+          switch (statusSquare.value) {
+            case 'a':
+            case 'b':
+            case 'c':
+            case 'd': return canicaVisitor
+            break;
+            case 'e':
+            case 'f':
+            case 'g':
+            case 'h': return notCani
+            break;
+          }
+        } else {
+          return canicaVisitor
+        }
+      })
+      const cani_f = computed(()=>{
+        if(!player.value){
+          switch (statusSquare.value) {
+            case 'a': return canicaVisitor
+            break;
+            case 'b':
+            case 'c':
+            case 'd':
+            case 'e':
+            case 'f':
+            case 'g':
+            case 'h': return notCani
+            break;
+          }
+        } else {
+          return canicaVisitor
         }
       })
 
@@ -467,8 +545,12 @@ export default {
         isOpponent,
         disableBtn,
         disableButton,
-        canicaHome,
-        canicaVisitor
+        cani_a,
+        cani_b,
+        cani_c,
+        cani_d,
+        cani_e,
+        cani_f
       }
 
     function disableBtn() {
